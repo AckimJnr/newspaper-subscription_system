@@ -1,4 +1,4 @@
-/.phpunit.cache
+/api/.phpunit.cache
 /api/node_modules
 /api/public/build
 /api/public/hot

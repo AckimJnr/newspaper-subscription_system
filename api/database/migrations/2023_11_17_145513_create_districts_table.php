@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->integer('district_id', true)->unique('district_id');
-            $table->string('district_code', 30)->primary();
+            $table->string('district_code', 30);
             $table->string('district_name');
             $table->enum('region', ['Northern', 'Central', 'Southern']);
+
+            $table->primary(['district_id']);
         });
     }
 

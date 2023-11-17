@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('user_details', function (Blueprint $table) {
+            $table->foreign(['account_id'], 'fk_user_details_account')->references(['account_id'])->on('users')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->foreign(['account_id'], 'user_details_ibfk_1')->references(['account_id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['district_code'], 'user_details_ibfk_2')->references(['district_code'])->on('districts')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
@@ -27,6 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('user_details', function (Blueprint $table) {
+            $table->dropForeign('fk_user_details_account');
             $table->dropForeign('user_details_ibfk_1');
             $table->dropForeign('user_details_ibfk_2');
         });

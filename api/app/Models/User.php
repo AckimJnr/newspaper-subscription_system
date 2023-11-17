@@ -32,7 +32,7 @@ class User extends Model
 	protected $table = 'users';
 	protected $primaryKey = 'account_id';
 	public $incrementing = false;
-	public $timestamps = false;
+	public $timestamps = true;
 
 	protected $casts = [
 		'user_id' => 'int'

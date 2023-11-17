@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->integer('role_id', true);
-            $table->string('account_id', 30)->nullable()->unique('account_id');
-            $table->enum('role', ['subscriber', 'admin'])->nullable()->default('subscriber');
+            $table->string('account_id')->unique('account_id');
+            $table->enum('role', ['subscriber', 'admin'])->default('subscriber');
         });
     }
 

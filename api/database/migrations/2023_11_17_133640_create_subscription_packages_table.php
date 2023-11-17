@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->integer('role_id', true);
-            $table->string('account_id', 30)->nullable()->unique('account_id');
-            $table->enum('role', ['subscriber', 'admin'])->nullable()->default('subscriber');
+        Schema::create('subscription_packages', function (Blueprint $table) {
+            $table->integer('package_id', true);
+            $table->string('package_name')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('duration_in_days')->nullable();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('subscription_packages');
     }
 };

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->foreign(['account_id'], 'fk_account_id')->references(['account_id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->foreign(['publication_tag'], 'posts_ibfk_1')->references(['tag'])->on('publications')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->dropForeign('fk_account_id');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeign('posts_ibfk_1');
         });
     }
 };

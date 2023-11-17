@@ -18,11 +18,14 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('username');
-            $table->string('email');
+            $table->string('email')->index();
             $table->string('company_name')->nullable();
             $table->enum('sex', ['male', 'female']);
             $table->string('password');
             $table->string('account_id')->primary();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken()->index();
+            $table->timestamps();
         });
     }
 
