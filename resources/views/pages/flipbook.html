@@ -1,0 +1,35 @@
+<!-- Include turn.js CSS and JavaScript files -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.turnjs.com/lib/turn.min.js"></script>
+
+<!-- Create a container element for the flip book -->
+<div id="flipbook"></div>
+
+<script>
+  // Initialize the flip book
+  $(document).ready(function() {
+    $('#flipbook').turn({
+      width: 800, // Set the width of the flip book
+      height: 600, // Set the height of the flip book
+      autoCenter: true, // Center the flip book on the page
+      display: 'double', // Display two pages at a time
+      acceleration: true, // Enable hardware acceleration for smoother page flipping
+      gradients: true, // Enable gradients for realistic page shadows
+      pages: [] // Array to store the PDF pages
+    });
+
+    // Load the PDF files into the flip book
+    // Replace 'path/to/pdf1.pdf' and 'path/to/pdf2.pdf' with your actual PDF file paths
+    $('#flipbook').turn('addPage', '<div class="page"><iframe src="path/to/pdf1.pdf"></iframe></div>');
+    $('#flipbook').turn('addPage', '<div class="page"><iframe src="path/to/pdf2.pdf"></iframe></div>');
+
+    // Add event handlers to navigate through the pages of the flip book
+    $('#flipbook').on('turning', function(event, page, view) {
+      console.log('Current page:', page);
+    });
+
+    $('#flipbook').on('turned', function(event, page, view) {
+      console.log('Page turned:', page);
+    });
+  });
+</script>
