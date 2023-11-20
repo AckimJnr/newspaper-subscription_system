@@ -6,12 +6,9 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class User
@@ -25,26 +22,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $sex
  * @property string $password
  * @property string $account_id
+ * @property Carbon|null $email_verified_at
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * 
+ * @property Collection|PublicationAccess[] $publication_accesses
  * @property Role $role
+ * @property Collection|Subscription[] $subscriptions
  * @property Collection|UserDetail[] $user_details
  *
  * @package App\Models
  */
-class User extends Model implements AuthenticatableContract
+class User extends Model
 {
-	use HasFactory, Authenticatable, HasApiTokens;
 	protected $table = 'users';
 	protected $primaryKey = 'account_id';
 	public $incrementing = false;
-	public $timestamps = true;
 
 	protected $casts = [
-		'user_id' => 'int'
+		'user_id' => 'int',
+		'email_verified_at' => 'datetime'
 	];
 
 	protected $hidden = [
-		'password'
+		'password',
+		'remember_token'
 	];
 
 	protected $fillable = [
@@ -55,12 +58,24 @@ class User extends Model implements AuthenticatableContract
 		'email',
 		'company_name',
 		'sex',
-		'password'
+		'password',
+		'email_verified_at',
+		'remember_token'
 	];
+
+	public function publication_accesses()
+	{
+		return $this->hasMany(PublicationAccess::class, 'account_id');
+	}
 
 	public function role()
 	{
 		return $this->hasOne(Role::class, 'account_id');
+	}
+
+	public function subscriptions()
+	{
+		return $this->hasMany(Subscription::class, 'account_id');
 	}
 
 	public function user_details()

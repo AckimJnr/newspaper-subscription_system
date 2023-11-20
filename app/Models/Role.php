@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * Class Role
  * 
  * @property int $role_id
- * @property string|null $account_id
- * @property string|null $role
+ * @property string $account_id
+ * @property string $role
  * 
- * @property User|null $user
+ * @property User $user
  *
  * @package App\Models
  */

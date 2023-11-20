@@ -14,11 +14,10 @@
 </head>
 
 <body class="text-center">
-       <main class="form-signin centered-form">
+    <main class="form-signin centered-form">
         <form id="loginForm">
             @csrf
-            <img class="mb-4" src="../../images/Npl_logo-removebg-preview.png" alt="" width="72" height="57">
-            <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+            <img class="mb-4" src="../../images/Npl_logo-removebg-preview.png" alt="" width="72" height="57"  onclick="navigateHome()">
 
             <div class="form-floating">
                 <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
@@ -35,7 +34,7 @@
                 </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="button" onclick="performLogin()">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 1993 - <?php echo date('Y');?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; 1993 - <?php echo date('Y'); ?></p>
             <p>Don't have an account? <a href="{{route('signup')}}">Sign up</a></p>
         </form>
     </main>
@@ -64,7 +63,7 @@
                     password: password,
                 },
                 success: function(response) {
-                    var token = response.access_token;
+                    let token = response.access_token;
                     localStorage.setItem('token', token);
                     localStorage.setItem('account_id', response.account_id);
 
@@ -89,6 +88,10 @@
                     }
                 }
             });
+        }
+
+        function navigateHome() {
+            window.location.href = AppConfig.apiUrl;
         }
     </script>
 

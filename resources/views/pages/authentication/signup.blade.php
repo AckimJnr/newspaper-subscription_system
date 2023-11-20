@@ -17,7 +17,7 @@
     <main class="form-signin centered-form">
         <form action="signup.php" method="POST">
             @csrf
-            <img class="mb-4" src="../../images/Npl_logo-removebg-preview.png" alt="" width="72" height="57">
+            <img class="mb-4" src="../../images/Npl_logo-removebg-preview.png" alt="" width="72" height="57" onclick="navigateHome()">
             <h1 class="h3 mb-3 fw-normal">Sign up</h1>
 
             <div class="form-floating">
@@ -167,9 +167,7 @@
                 },
                 data: JSON.stringify(updatedProfile),
                 success: function(response) {
-                    // Show success alert
                     showAlertSignup('Account Created Successfully, proceed to login', 'success');
-                    // window.location.href = "{{route('signin')}}";
                     function showAlertSignup(message, type) {
                         if (type === 'success') {
                             Swal.fire({
@@ -239,6 +237,9 @@
             localStorage.removeItem("account_id");
 
             window.location.href = "{{ route('logout') }}";
+        }
+        function navigateHome() {
+            window.location.href = AppConfig.apiUrl;
         }
     </script>
 
