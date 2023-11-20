@@ -21,3 +21,4 @@ yarn-error.log
 .gitattributes
 api/.env.example
 api/phpunit.xml
+.env.example

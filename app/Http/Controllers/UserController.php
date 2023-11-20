@@ -62,6 +62,12 @@ class UserController extends Controller
                 'country' => $validatedData['country'],
                 'phone_number' => $validatedData['phone_number'],
             ]);
+            
+            $user->role()->create([
+                'account_id' => $user->account_id,
+                'role' => 'subscriber',
+            ]);
+
 
             return $user;
         });

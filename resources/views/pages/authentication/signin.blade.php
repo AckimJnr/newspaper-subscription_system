@@ -14,8 +14,7 @@
 </head>
 
 <body class="text-center">
-
-    <main class="form-signin centered-form">
+       <main class="form-signin centered-form">
         <form id="loginForm">
             @csrf
             <img class="mb-4" src="../../images/Npl_logo-removebg-preview.png" alt="" width="72" height="57">
@@ -29,24 +28,24 @@
                 <input type="password" class="form-control" id="password" placeholder="Password" required>
                 <label for="password">Password</label>
             </div>
-
+            <div id="error-message" class="alert alert-danger" style="display:none;"></div>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="button" onclick="performLogin()">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+            <p class="mt-5 mb-3 text-muted">&copy; 1993 - <?php echo date('Y');?></p>
             <p>Don't have an account? <a href="{{route('signup')}}">Sign up</a></p>
         </form>
     </main>
 
-    <!-- Include jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function performLogin() {
             var email = $('#email').val();
             var password = $('#password').val();
+            $('#error-message').hide().empty();
             var headers = {
                 'Content-Type': 'application/json',
                 'Allow-Control-Allow-Origin': '*',
@@ -59,20 +58,35 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'http://127.0.0.1:8000/api/login',
+                url: AppConfig.apiUrl + '/api/login',
                 data: {
                     email: email,
                     password: password,
-              
-
                 },
                 success: function(response) {
                     var token = response.access_token;
                     localStorage.setItem('token', token);
-                    window.location.href = "{{route('userprofile')}}";
+                    localStorage.setItem('account_id', response.account_id);
+
+                    if (response.role == 'admin')
+                        window.location.href = "{{route('admin')}}";
+                    else
+                        window.location.href = "{{route('newsfeed')}}";
                 },
                 error: function(error) {
-                    console.log(error);
+                    if (error.status === 401) {
+                        // Invalid credentials
+                        $('#error-message').text('Invalid credentials. Please check your email and password.').show();
+                    } else if (error.status === 422) {
+                        // Validation failed
+                        var errorMessage = error.responseJSON.message;
+                        if (error.responseJSON.errors && error.responseJSON.errors.email) {
+                            errorMessage += ' ' + error.responseJSON.errors.email[0];
+                        }
+                        $('#error-message').text(errorMessage).show();
+                    } else {
+                        console.log(error);
+                    }
                 }
             });
         }

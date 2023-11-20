@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'company_name' => $this->company_name,
             'sex' => $this->sex,
             'account_id' => $this->account_id,
-            'user_details' => $this->user_details,
+            'role' => $this->role->role ?? null,
             'user_details' => $this->user_details->map(function ($userDetail) {
                 return [
                     'district_name' => $userDetail->district->district_name ?? null,
@@ -33,6 +33,7 @@ class UserResource extends JsonResource
                     'phone_number' => $userDetail->phone_number ?? null,
                 ];
             }),
+
         ];
     }
 }

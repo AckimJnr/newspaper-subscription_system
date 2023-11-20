@@ -26,6 +26,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $user->createToken('auth_token')->plainTextToken,
             'token_type' => 'Bearer',
+            'role' => $user->role->role ?? null,
+            'account_id' => $user->account_id,
         ]);
 
     }
@@ -38,4 +40,12 @@ class AuthController extends Controller
     public function signup(){
         return view ('pages.authentication.signup');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+    
+        return redirect('signin');
+    }
+
 }
