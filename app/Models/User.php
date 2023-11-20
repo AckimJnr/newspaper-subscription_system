@@ -5,10 +5,13 @@
  */
 
 namespace App\Models;
-
+use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class User
@@ -34,11 +37,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Model implements AuthenticatableContract
 {
+	use HasFactory, Authenticatable, HasApiTokens;
 	protected $table = 'users';
 	protected $primaryKey = 'account_id';
 	public $incrementing = false;
+	public $timestamps = true;
 
 	protected $casts = [
 		'user_id' => 'int',
